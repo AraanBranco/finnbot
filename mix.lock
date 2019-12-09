@@ -1,0 +1,3 @@
+%{
+  "exirc": {:hex, :exirc, "1.1.0", "212a86124a113d87752ce528d52f8e2e2dab3accada66e5330591b9de2c628f9", [:mix], [], "hexpm"},
+}
