@@ -12,7 +12,6 @@ defmodule Finnbot.Server do
     GenServer.start_link(__MODULE__, %{}, name: :point)
   end
 
-  def handle_call({:account, id}, _from, state) do
-    {:reply, Ledger.get_account(id), state}
+  def handle_call({:user_info, nick}, _from, state) do
   end
 end

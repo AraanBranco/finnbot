@@ -13,7 +13,6 @@ defmodule Finnbot.Bot do
               pass:    nil,
               nick:    nil,
               user:    nil,
-              name:    nil,
               channel: nil,
               client:  nil
 
