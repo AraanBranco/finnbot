@@ -34,14 +34,14 @@ defmodule Finnbot.Bot do
 
   def init([config]) do
     # Start the client and handler processes, the ExIRC supervisor is automatically started when your app runs
-    {:ok, client}  = ExIRC.start_link!()
+    {:ok, client} = ExIRC.start_link!()
 
     # Register the event handler with ExIRC
-    Client.add_handler client, self()
+    Client.add_handler(client, self())
 
     # Connect and logon to a server, join a channel and send a simple message
     Logger.debug("Connecting to #{config.server}:#{config.port}")
-    Client.connect! client, config.server, config.port
+    Client.connect!(client, config.server, config.port)
 
     {:ok, %Config{config | :client => client}}
   end
@@ -49,7 +49,7 @@ defmodule Finnbot.Bot do
   def terminate(_, state) do
     # Quit the channel and close the underlying client connection when the process is terminating
     Logger.info("Terminate bot...")
-    Client.quit state.client, "Goodbye, cruel world."
+    Client.quit(state.client, "Goodbye, cruel world.")
     Client.stop! state.client
     :ok
   end
@@ -57,14 +57,14 @@ defmodule Finnbot.Bot do
   def handle_info({:connected, server, port}, config) do
     Logger.debug("Connected to #{server}:#{port}")
     Logger.debug("Logging to #{server}:#{port} as #{config.nick}..")
-    Client.logon config.client, config.pass, config.nick, config.user, config.name
+    Client.logon(config.client, config.pass, config.nick, config.user, config.name)
     {:noreply, config}
   end
 
   def handle_info(:logged_in, config) do
     Logger.debug("Logged in to #{config.server}:#{config.port}")
     Logger.debug("Joining #{config.channel}..")
-    Client.join config.client, config.channel
+    Client.join(config.client, config.channel)
     {:noreply, config}
   end
 
